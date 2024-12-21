@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		50072C7E2D0933D4004F6527 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50072C7D2D0933D4004F6527 /* AppState.swift */; };
-		50646D172CDB1576000E104D /* Lovely_FamilyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50646D162CDB1576000E104D /* Lovely_FamilyApp.swift */; };
 		50646D1B2CDB1577000E104D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50646D1A2CDB1577000E104D /* Assets.xcassets */; };
 		50646D1F2CDB1577000E104D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50646D1E2CDB1577000E104D /* Preview Assets.xcassets */; };
 		506BF9EB2CE4F4EB00566F6E /* Perception in Frameworks */ = {isa = PBXBuildFile; productRef = 506BF9EA2CE4F4EB00566F6E /* Perception */; };
@@ -16,9 +14,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		50072C7D2D0933D4004F6527 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		50646D132CDB1576000E104D /* Lovely Family.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lovely Family.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		50646D162CDB1576000E104D /* Lovely_FamilyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lovely_FamilyApp.swift; sourceTree = "<group>"; };
 		50646D1A2CDB1577000E104D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		50646D1C2CDB1577000E104D /* Lovely_Family.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Lovely_Family.entitlements; sourceTree = "<group>"; };
 		50646D1E2CDB1577000E104D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -26,6 +22,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		5005A3812D07AF2400BA69E8 /* Data */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Data; sourceTree = "<group>"; };
+		506995E22D1762160019810B /* Features */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Features; sourceTree = "<group>"; };
 		50A6B90E2CF0CFFA002C3FDF /* Component */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Component; sourceTree = "<group>"; };
 		50A6B91B2CF0D004002C3FDF /* Helper */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Helper; sourceTree = "<group>"; };
 		50A6B92C2CF0D00A002C3FDF /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
@@ -64,11 +61,10 @@
 		50646D152CDB1576000E104D /* Lovely Family */ = {
 			isa = PBXGroup;
 			children = (
-				50072C7D2D0933D4004F6527 /* AppState.swift */,
+				506995E22D1762160019810B /* Features */,
 				5005A3812D07AF2400BA69E8 /* Data */,
 				50A6B90E2CF0CFFA002C3FDF /* Component */,
 				50A6B91B2CF0D004002C3FDF /* Helper */,
-				50646D162CDB1576000E104D /* Lovely_FamilyApp.swift */,
 				50A6B92C2CF0D00A002C3FDF /* Views */,
 				50646D1C2CDB1577000E104D /* Lovely_Family.entitlements */,
 				50646D1D2CDB1577000E104D /* Preview Content */,
@@ -103,6 +99,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				5005A3812D07AF2400BA69E8 /* Data */,
+				506995E22D1762160019810B /* Features */,
 				50A6B90E2CF0CFFA002C3FDF /* Component */,
 				50A6B91B2CF0D004002C3FDF /* Helper */,
 				50A6B92C2CF0D00A002C3FDF /* Views */,
@@ -167,8 +164,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50646D172CDB1576000E104D /* Lovely_FamilyApp.swift in Sources */,
-				50072C7E2D0933D4004F6527 /* AppState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

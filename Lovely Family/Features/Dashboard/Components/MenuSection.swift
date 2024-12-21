@@ -22,40 +22,40 @@ struct MenuSection: View {
         GridItem(.adaptive(minimum: 80), alignment: .top),
     ]
     
-    func getDestination(id: Int) -> AnyView {
-        if (id == 0) {
-            return AnyView(ManajemenInventarisView(rootIsActive: $manajemenInventarisRootActive).environment(dashboardVM))
-        } else if (id == 1) {
-            return AnyView(ManajemenBarangPakaiHabis(rootIsActive: $manajemenBarangPakaiHabisRootActive).environment(dashboardVM))
-        } else if (id == 2) {
-            return AnyView(ManajemenAset(rootIsActive: $manajemenAsetRootActive).environment(dashboardVM))
-        } else {
-            return AnyView(TaskApproval(rootIsActive: $taskApprovalRootActive).environment(dashboardVM))
-        }
-    }
-    
-    func getRootActive(id: Int) -> Binding<Bool> {
-        if (id == 0) {
-            return $manajemenInventarisRootActive
-        } else if (id == 1) {
-            return $manajemenBarangPakaiHabisRootActive
-        } else if (id == 2) {
-            return $manajemenAsetRootActive
-        } else {
-            return $taskApprovalRootActive
-        }
-    }
+//    func getDestination(id: Int) -> AnyView {
+//        if (id == 0) {
+//            return AnyView(ManajemenInventarisView(rootIsActive: $manajemenInventarisRootActive).environment(dashboardVM))
+//        } else if (id == 1) {
+//            return AnyView(ManajemenBarangPakaiHabis(rootIsActive: $manajemenBarangPakaiHabisRootActive).environment(dashboardVM))
+//        } else if (id == 2) {
+//            return AnyView(ManajemenAset(rootIsActive: $manajemenAsetRootActive).environment(dashboardVM))
+//        } else {
+//            return AnyView(TaskApproval(rootIsActive: $taskApprovalRootActive).environment(dashboardVM))
+//        }
+//    }
+//    
+//    func getRootActive(id: Int) -> Binding<Bool> {
+//        if (id == 0) {
+//            return $manajemenInventarisRootActive
+//        } else if (id == 1) {
+//            return $manajemenBarangPakaiHabisRootActive
+//        } else if (id == 2) {
+//            return $manajemenAsetRootActive
+//        } else {
+//            return $taskApprovalRootActive
+//        }
+//    }
     
     var body: some View {
         VStack(alignment: .leading) {
             
-            LazyVGrid(columns: layout) {
-                ForEach(dashboardVM.menuList) { item in
-                    NavigationLink(destination: getDestination(id: item.id), isActive: getRootActive(id: item.id)) {
-                        MenuItem(menu: item)
-                    }
-                }
-            }
+//            LazyVGrid(columns: layout) {
+//                ForEach(dashboardVM.menuList) { item in
+//                    NavigationLink(destination: getDestination(id: item.id), isActive: getRootActive(id: item.id)) {
+//                        MenuItem(menu: item)
+//                    }
+//                }
+//            }
             
             Spacer()
             
