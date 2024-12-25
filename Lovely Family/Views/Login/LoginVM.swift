@@ -16,12 +16,10 @@ import Foundation
     
     func login(appState: AppState) async {
         loginState = RequestState.LOADING
-
-        await delay(second: 1)
         
         await performNetworkingTask(
             task: {
-                try await loginRepo.login(username: loginForm.nis, password: loginForm.password)
+                try await loginRepo.login(data: loginForm.getData())
             },
             onSuccess: { data in
                 loginState = RequestState.SUCCESS

@@ -28,12 +28,30 @@ class HttpRequest {
         }
     }
     
-    static func post<T: Codable>(path: String) async throws -> T {
+    static func post<T: Codable>(path: String, body: Data, boundary: String = "", isFormData: Bool = false) async throws -> T {
         let endpoint = "\(Constant.BASE_URL)\(path)"
         
         guard let url = URL(string: endpoint) else { throw NetworkingError.INVALID_URL }
         
-        let (data, response) = try await URLSession.shared.data(from: url)
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = body
+        
+        request.setValue(
+            "application/json",
+            forHTTPHeaderField: "Content-Type"
+        )
+        
+        if isFormData {
+            request.setValue(
+                "multipart/form-data; boundary=\(boundary)",
+                forHTTPHeaderField: "Content-Type"
+            )
+        }
+        
+        NetworkLogger.log(request: request)
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
         
         NetworkLogger.log(response: response as? HTTPURLResponse, data: data, error: nil)
         

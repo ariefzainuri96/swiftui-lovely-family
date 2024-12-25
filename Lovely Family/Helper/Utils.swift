@@ -56,8 +56,8 @@ func setNavigationBarLayout(backgroundColor: String = "#1E3A8A") {
 }
 
 func generateRandomString(length: Int) -> String {
-  let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-  return String((0..<length).map{ _ in letters.randomElement()! })
+    let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    return String((0..<length).map{ _ in letters.randomElement()! })
 }
 
 func performNetworkingTask<T>(
@@ -84,4 +84,33 @@ func performNetworkingTask<T>(
 
 func delay(second: UInt64) async {
     do { try await Task.sleep(nanoseconds: getSecond(second: second)) } catch {}
+}
+
+func createFormDataBody(with parameters: [String: String], fileURL: URL) -> Data {
+    let boundary = UUID().uuidString
+    
+    var body = Data()
+    
+    // Add parameters
+    for (key, value) in parameters {
+        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8)!)
+        body.append("\(value)\r\n".data(using: .utf8)!)
+    }
+    
+    // Add file
+    let filename = fileURL.lastPathComponent
+    let mimeType = "image/png" // Replace with the appropriate MIME type
+    body.append("--\(boundary)\r\n".data(using: .utf8)!)
+    body.append("Content-Disposition: form-data; name=\"file\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
+    body.append("Content-Type: \(mimeType)\r\n\r\n".data(using: .utf8)!)
+    if let fileData = try? Data(contentsOf: fileURL) {
+        body.append(fileData)
+    }
+    body.append("\r\n".data(using: .utf8)!)
+    
+    // End the body
+    body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+    
+    return body
 }

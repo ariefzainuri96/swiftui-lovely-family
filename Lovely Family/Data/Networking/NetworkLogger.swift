@@ -19,9 +19,8 @@ class NetworkLogger {
         let query = "\(urlComponents?.query ?? "")"
         let host = "\(urlComponents?.host ?? "")"
         var output = """
-           \(urlAsString) \n\n
-           \(method) \(path)?\(query) HTTP/1.1 \n
-           HOST: \(host)\n
+           \(urlAsString) \n
+           \(method) \(path)?\(query) \n           
            """
         
         for (key,value) in request.allHTTPHeaderFields ?? [:] {

@@ -7,54 +7,61 @@
 
 import SwiftUI
 
-// WARN: if you want to set infinite line, set maxline like 10000 
+// WARN: if you want to set infinite line, set maxline like 10000
 
 struct CustomTextField: View {
     @Binding var value: String
     var label: String?
-    var hint: String = ""
+    var hint: String = "Type here"
     var isObsecure: Bool = false
     var disabled: Bool = false
     var maxLine: Int?
     var minLine: Int?
-     
+    var handleOnCommit: (() -> Void)?
+    
     var body: some View {
         VStack(alignment: .leading) {
             if (label != nil) {
                 Text(label!).font(.system(size: 12, weight: .medium)).foregroundStyle(Color("#BFBFBF"))
             }
             
-            if (isObsecure) {
-                SecureField(hint, text: $value)
-                    .font(.system(size: 14, weight: .thin))
-                    .foregroundColor(Color("#333333"))
-                    .background(Color.white)
-                    .padding(.vertical, 12)
-                    .padding(.horizontal, 16)
-                    .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color("#E0E0E0"), lineWidth: 1))
-            } else {
-                if #available(iOS 16.0, *) {
-                    TextField(hint, text: $value, axis: (maxLine ?? 1) == 1 ? .horizontal : .vertical)
-                        // maxline
-                        .lineLimit(maxLine)
-                        // fixed min line
-                        .lineLimit((minLine ?? 1), reservesSpace: true)
-                        .disabled(disabled)
-                        .font(.system(size: 14, weight: .thin))
-                        .foregroundColor(Color("#333333"))
-                        .background(Color.white)
-                        .padding(.vertical, 12)
+            ZStack(alignment: .center) {
+                if value.isEmpty {
+                    Text(hint)
+                        .foregroundColor(.gray)
+                        .font(.system(size: 14, design: .default))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 16).padding(.vertical, 14)
+                }
+                
+                if (isObsecure) {
+                    SecureField("", text: $value, onCommit: handleOnCommit ?? {})
+                        .padding(.vertical, 14)
                         .padding(.horizontal, 16)
-                        .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color("#E0E0E0"), lineWidth: 1))
+                        .font(.system(size: 14, design: .default))
+                        .foregroundColor(Color("#333333"))
+                        .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color("#000"), lineWidth: 1))
                 } else {
-                    TextField(hint, text: $value)
-                        .disabled(disabled)
-                        .font(.system(size: 14, weight: .thin))
-                        .foregroundColor(Color("#333333"))
-                        .background(Color.white)
-                        .padding(.vertical, 12)
-                        .padding(.horizontal, 16)
-                        .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color("#E0E0E0"), lineWidth: 1))
+                    if #available(iOS 16.0, *) {
+                        TextField("", text: $value, axis: (maxLine ?? 1) == 1 ? .horizontal : .vertical)
+                            .padding(.vertical, 14)
+                            .padding(.horizontal, 16)
+                            .onSubmit(handleOnCommit ?? {})
+                            .lineLimit(maxLine)
+                            .lineLimit((minLine ?? 1), reservesSpace: true)
+                            .disabled(disabled)
+                            .font(.system(size: 14, design: .default))
+                            .foregroundColor(Color("#333333"))
+                            .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color("#000"), lineWidth: 1))
+                    } else {
+                        TextField("", text: $value, onCommit: handleOnCommit ?? {})
+                            .padding(.vertical, 14)
+                            .padding(.horizontal, 16)
+                            .disabled(disabled)
+                            .font(.system(size: 14, design: .default))
+                            .foregroundColor(Color("#333333"))                            
+                            .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color("#000"), lineWidth: 1))
+                    }
                 }
             }
         }

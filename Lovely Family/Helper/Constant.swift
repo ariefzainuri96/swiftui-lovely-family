@@ -6,5 +6,5 @@
 //
 
 class Constant {
-    static var BASE_URL = "http://localhost:9000"
+    static var BASE_URL = "https://expressjs-lovely-family.vercel.app"
 }
