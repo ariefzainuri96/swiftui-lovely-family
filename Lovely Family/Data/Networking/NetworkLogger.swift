@@ -17,7 +17,7 @@ class NetworkLogger {
         let method = request.httpMethod != nil ? "\(request.httpMethod ?? "")" : ""
         let path = "\(urlComponents?.path ?? "")"
         let query = "\(urlComponents?.query ?? "")"
-        let host = "\(urlComponents?.host ?? "")"
+        _ = "\(urlComponents?.host ?? "")"
         var output = """
            \(urlAsString) \n
            \(method) \(path)?\(query) \n           

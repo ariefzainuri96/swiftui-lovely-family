@@ -74,7 +74,7 @@ func performNetworkingTask<T>(
     } catch NetworkingError.INVALID_RESPONSE {
         onFailure("Error on the server")
     } catch NetworkingError.INVALID_DATA {
-        onFailure("Error parsing response data")
+        onFailure("Error parsing response data, Please check your Model, make sure it's same with the response!")
     } catch NetworkingError.INVALID_URL {
         onFailure("Invalid URL")
     } catch {
@@ -113,4 +113,16 @@ func createFormDataBody(with parameters: [String: String], fileURL: URL) -> Data
     body.append("--\(boundary)--\r\n".data(using: .utf8)!)
     
     return body
+}
+
+func getErrorFormMessage<T, Value>(_ keyPath: WritableKeyPath<T, Value>, errorForm: [FormErrorModel]) -> String {
+    let label = "\(keyPath)".components(separatedBy: ".").last ?? ""
+    
+    if let error = errorForm.first(where: { item in
+        item.label == label
+    }) {
+        return error.message
+    }
+    
+    return ""
 }

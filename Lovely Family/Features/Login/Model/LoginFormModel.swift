@@ -7,20 +7,9 @@
 
 import Foundation
 
-struct LoginFormModel: Codable {
+struct LoginFormModel: Codable, EmptyFieldCheckable {
     var email = ""
     var password = ""
-    var isChecked: Bool = false
-    
-    // Exclude `isChecked` from encoding
-    enum CodingKeys: String, CodingKey {
-        case email
-        case password
-    }
-    
-    func isLoginEnable() -> Bool {
-        return !email.isEmpty && !password.isEmpty
-    }
     
     func getData() -> Data {
         let data = try! JSONEncoder().encode(self)

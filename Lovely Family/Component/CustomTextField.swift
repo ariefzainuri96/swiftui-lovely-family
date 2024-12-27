@@ -11,13 +11,30 @@ import SwiftUI
 
 struct CustomTextField: View {
     @Binding var value: String
-    var label: String?
-    var hint: String = "Type here"
-    var isObsecure: Bool = false
-    var disabled: Bool = false
-    var maxLine: Int?
-    var minLine: Int?
-    var handleOnCommit: (() -> Void)?
+    @Binding var isObsecure: Bool
+    private var showPassword: Bool
+    private var label: String?
+    private var hint: String = "Type here"
+    private var disabled: Bool
+    private var maxLine: Int?
+    private var minLine: Int?
+    private var handleOnCommit: (() -> Void)?
+    private var error: String?
+    
+    init(
+        value: Binding<String>, isObsecure: Binding<Bool> = .constant(false), showPassword: Bool = false, label: String? = nil, hint: String, disabled: Bool = false, maxLine: Int? = nil, minLine: Int? = nil, error: String? = nil, handleOnCommit: (() -> Void)? = nil
+    ) {
+        self._value = value
+        self._isObsecure = isObsecure
+        self.showPassword = showPassword
+        self.label = label
+        self.hint = hint
+        self.disabled = disabled
+        self.maxLine = maxLine
+        self.minLine = minLine
+        self.error = error
+        self.handleOnCommit = handleOnCommit
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -34,18 +51,23 @@ struct CustomTextField: View {
                         .padding(.horizontal, 16).padding(.vertical, 14)
                 }
                 
-                if (isObsecure) {
+                if isObsecure {
                     SecureField("", text: $value, onCommit: handleOnCommit ?? {})
-                        .padding(.vertical, 14)
-                        .padding(.horizontal, 16)
+                        .padding(.leading, 16)
+                        // we add 32 because of trailing icon to reveal password
+                        .padding(.trailing, 32)
+                        .frame(height: 48)
+                        .lineLimit(1)
+                        .lineLimit(1)
+                        .disabled(disabled)
                         .font(.system(size: 14, design: .default))
                         .foregroundColor(Color("#333333"))
                         .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color("#000"), lineWidth: 1))
                 } else {
                     if #available(iOS 16.0, *) {
                         TextField("", text: $value, axis: (maxLine ?? 1) == 1 ? .horizontal : .vertical)
-                            .padding(.vertical, 14)
                             .padding(.horizontal, 16)
+                            .frame(height: 48)
                             .onSubmit(handleOnCommit ?? {})
                             .lineLimit(maxLine)
                             .lineLimit((minLine ?? 1), reservesSpace: true)
@@ -55,14 +77,27 @@ struct CustomTextField: View {
                             .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color("#000"), lineWidth: 1))
                     } else {
                         TextField("", text: $value, onCommit: handleOnCommit ?? {})
-                            .padding(.vertical, 14)
                             .padding(.horizontal, 16)
+                            .frame(height: 48)
                             .disabled(disabled)
                             .font(.system(size: 14, design: .default))
                             .foregroundColor(Color("#333333"))                            
                             .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color("#000"), lineWidth: 1))
                     }
                 }
+            }
+            .overlay(alignment: .trailing) {
+                if showPassword {
+                    Image(systemName: isObsecure ? "eye.slash.fill" : "eye.fill")
+                        .padding(.trailing, 16)
+                        .onTapGesture {
+                            self.isObsecure.toggle()
+                        }
+                }
+            }
+            
+            if let error = error, !error.isEmpty {
+                Text(error).font(.system(size: 12, design: .default)).foregroundColor(.red)
             }
         }
     }

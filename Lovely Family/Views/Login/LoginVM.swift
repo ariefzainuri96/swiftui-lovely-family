@@ -13,8 +13,19 @@ import Foundation
     
     var loginState = RequestState.IDLE
     var loginForm: LoginFormModel = LoginFormModel()
+    var errorLoginForm: [FormErrorModel] = []
+    var isObsecure = true
     
     func login(appState: AppState) async {
+        if loginState == RequestState.LOADING { return }
+            
+        errorLoginForm = loginForm.emptyFields
+        
+        // stop the process and show the error in view
+        if !errorLoginForm.isEmpty {
+            return
+        }
+        
         loginState = RequestState.LOADING
         
         await performNetworkingTask(
@@ -26,10 +37,13 @@ import Foundation
                 
                 UserDefaults.standard.set(true, forKey: UserDefaultsKey.IS_LOGIN)
                 
-                appState.isLogin = !appState.isLogin
+                print("sukses login")
+                
+                appState.isLogin = true
             },
-            onFailure: { error in
+            onFailure: { error in                
                 loginState = RequestState.ERROR
+                print("Error: \(error)")
             }
         )
     }

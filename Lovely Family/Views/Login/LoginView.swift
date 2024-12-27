@@ -9,7 +9,6 @@ import SwiftUI
 import Perception
 
 struct LoginView: View {
-    
     @Environment(AppState.self) var appState
     let model = LoginVM()
     
@@ -41,10 +40,10 @@ struct LoginView: View {
                         Text("Welcome Back")
                             .font(.custom("AmericanTypewriter", fixedSize: 30).weight(.semibold)).padding(.top, 16)
                         
-                        CustomTextField(value: $_model.loginForm.email, hint: "Email")
+                        CustomTextField(value: $_model.loginForm.email, hint: "Email", error: getErrorFormMessage(\LoginFormModel.email, errorForm: model.errorLoginForm))
                             .padding(.top, 36)
                         
-                        CustomTextField(value: $_model.loginForm.password, hint: "Password", isObsecure: true) {
+                        CustomTextField(value: $_model.loginForm.password, isObsecure: $_model.isObsecure, showPassword: true, hint: "Password", error: getErrorFormMessage(\LoginFormModel.password, errorForm: model.errorLoginForm)) {
                             Task {
                                 await model.login(appState: appState)
                             }

@@ -14,11 +14,5 @@ import Foundation
 struct LoginResponse: Codable {
     let status: Int?
     let message: String?
-    let data: LoginData?
-}
-
-// MARK: - LoginData
-struct LoginData: Codable {
-    let id: Int?
-    let name, email: String?
+    let data: String?
 }
